@@ -16,9 +16,10 @@ export function Widget() {
     */ 
     return (
         <Popover className="absolute bottom-4 right-4 group">
+            <Popover.Panel>Teste</Popover.Panel>
             <Popover.Button className="bg-violet-500 rounded full px-3 h-12 text-white flex items-center">
                 <ChatTeardropDots className="w-6 h-6" />
-                <Popover.Panel className="px-2 hidden group-hover:block transition-all duration-500 ease-linear">Feedback</Popover.Panel>
+                <span className="px-2 hidden group-hover:block transition-all duration-500 ease-linear">Feedback</span>
             </Popover.Button>
         </Popover>
     )
