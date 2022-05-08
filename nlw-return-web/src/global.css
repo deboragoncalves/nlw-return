@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* - Para aplicar classes do tailwind do arquivo css, basta usar o @apply
+   - Utilizar o hexadecimal em uma classe do tailwind, usar colchetes
+*/
+
+body { 
+    @apply bg-[#09090A] text-zinc-100;
+}
