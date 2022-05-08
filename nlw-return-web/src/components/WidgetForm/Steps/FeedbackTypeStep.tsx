@@ -1,6 +1,8 @@
+import { FeedbackType } from "..";
+
 interface FeedbackTypeStepProps {
     feedbackTypes: Object;
-    onFeedbackTypeChanged: (type: any) => void;
+    onFeedbackTypeChanged: (type: FeedbackType) => void;
 }
 
 // Quando é uma função passada como props, devo declarar o tipo de parâmetro e de retorno
@@ -8,8 +10,6 @@ interface FeedbackTypeStepProps {
 
 export function FeedbackTypeStep(prop: FeedbackTypeStepProps) {
     let feedbackTypes = prop.feedbackTypes;
-
-    type FeedbackType = keyof typeof feedbackTypes;
 
     return (
         <div className="flex py-8 gap-2 w-full">

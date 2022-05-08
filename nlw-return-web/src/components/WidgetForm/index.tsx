@@ -7,6 +7,7 @@ import bugImage from "../../images/bug.svg";
 import ideaImage from "../../images/idea.svg";
 import thoughtImage from "../../images/thought.svg";
 import { FeedbackTypeStep } from "./Steps/FeedbackTypeStep";
+import { FeedbackContentStep } from "./Steps/FeedbackContentStep";
 
 /*
     Tailwind:
@@ -30,44 +31,53 @@ import { FeedbackTypeStep } from "./Steps/FeedbackTypeStep";
     - onClick deve receber apenas uma função. se passar algum parâmetro, estarei já executando. corrigir usando arrow function
     - typeof retorna a estrutura do objeto
     - determinar que o estado vai armazenar dados do tipo FeedbackType ou null
+
+    - fragment: <> </> . div não é exibida no DOM
 */
 
-export function WidgetForm() {  
-    const feedbackTypes = {
-        BUG: {
-            title: "Problema",
-            image: {
-                source: bugImage,
-                alt: "Feedback sobre um problema"
-            }
-        },
-        IDEA: {
-            title: "Ideia",
-            image: {
-                source: ideaImage,
-                alt: "Feedback sobre uma ideia"
-            }
-        }, 
-        OTHER: {
-            title: "Outro",
-            image: {
-                source: thoughtImage,
-                alt: "Feedback sobre outro tema"
-            }
+const feedbackTypes = {
+    BUG: {
+        title: "Problema",
+        image: {
+            source: bugImage,
+            alt: "Feedback sobre um problema"
+        }
+    },
+    IDEA: {
+        title: "Ideia",
+        image: {
+            source: ideaImage,
+            alt: "Feedback sobre uma ideia"
+        }
+    }, 
+    OTHER: {
+        title: "Outro",
+        image: {
+            source: thoughtImage,
+            alt: "Feedback sobre outro tema"
         }
     }
+}
 
-    type FeedbackType = keyof typeof feedbackTypes;
+export type FeedbackType = keyof typeof feedbackTypes;
+
+export function WidgetForm() {  
 
     const [feedbackType, setFeedbackType] = useState<FeedbackType | null>(null);
 
+    function restartFeedback() {
+        setFeedbackType(null);
+    }
+
     return (
         <div className="bg-zinc-900 p-4 relative rounded-2xl mb-4 flex-col items-center shadow-lg w-[calc(100vw-2rem)] md:w-auto">
-            <WidgetHeader title="Deixe seu feedback"></WidgetHeader>
 
             {!feedbackType ?
-                <FeedbackTypeStep feedbackTypes={feedbackTypes} onFeedbackTypeChanged={setFeedbackType} />           
-            : null}
+                <>
+                    <WidgetHeader title="Deixe seu feedback"></WidgetHeader>
+                    <FeedbackTypeStep feedbackTypes={feedbackTypes} onFeedbackTypeChanged={setFeedbackType} />
+                </>           
+            : <FeedbackContentStep restartFeedback={restartFeedback} feedbackTypes={feedbackTypes} feedbackType={feedbackType} />}
 
             <WidgetFooter></WidgetFooter>
         </div>
