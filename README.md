@@ -1,5 +1,5 @@
 # NLW Return
-Project is been developed during the NLW Return 2022, an event from Rocketseat.
+Project was developed during the NLW Return 2022, an event from Rocketseat. For me, the main objective of this event was to learn React, so I prefered to do only the frontend. In the future, I pretend to refactor this project adding the backend in Nodejs and also mobile using React Native.
 
 ## Start the project
 
