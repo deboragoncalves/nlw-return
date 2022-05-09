@@ -49,7 +49,7 @@ export function FeedbackContentStep(prop: FeedbackContentStepProps) {
             <button onClick={prop.restartFeedback} type="button" className="top-5 left-5 absolute text-zinc-400 hover:text-zinc-100">
                 <ArrowLeft weight="bold" className="w-4 h-4"/>
             </button>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 mx-10">
                 <img src={feedbackImageSource} alt={feedbackImageAlt} />
                 <WidgetHeader title={feedbackTitle} />
                 <CloseButton />
