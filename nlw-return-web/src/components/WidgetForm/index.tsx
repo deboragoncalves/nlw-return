@@ -8,6 +8,7 @@ import ideaImage from "../../images/idea.svg";
 import thoughtImage from "../../images/thought.svg";
 import { FeedbackTypeStep } from "./Steps/FeedbackTypeStep";
 import { FeedbackContentStep } from "./Steps/FeedbackContentStep";
+import { FeedbackSucessStep } from "./Steps/FeedbackSucessStep";
 
 /*
     Tailwind:
@@ -64,20 +65,29 @@ export type FeedbackType = keyof typeof feedbackTypes;
 export function WidgetForm() {  
 
     const [feedbackType, setFeedbackType] = useState<FeedbackType | null>(null);
+    const [feedbackSent, setFeedbackSent] = useState<boolean>(false);
 
     function restartFeedback() {
+        setFeedbackSent(false);
         setFeedbackType(null);
     }
 
     return (
         <div className="bg-zinc-900 p-4 relative rounded-2xl mb-4 flex-col items-center shadow-lg w-[calc(100vw-2rem)] md:w-auto">
-
-            {!feedbackType ?
-                <>
-                    <WidgetHeader title="Deixe seu feedback"></WidgetHeader>
-                    <FeedbackTypeStep feedbackTypes={feedbackTypes} onFeedbackTypeChanged={setFeedbackType} />
-                </>           
-            : <FeedbackContentStep restartFeedback={restartFeedback} feedbackTypes={feedbackTypes} feedbackType={feedbackType} />}
+            
+            {feedbackSent ?
+                <FeedbackSucessStep restartFeedback={restartFeedback} /> :
+                (
+                    <>
+                        {!feedbackType ?
+                            <>
+                                <WidgetHeader title="Deixe seu feedback"></WidgetHeader>
+                                <FeedbackTypeStep feedbackTypes={feedbackTypes} onFeedbackTypeChanged={setFeedbackType} />
+                            </>           
+                        : <FeedbackContentStep setFeedbackSent={setFeedbackSent} restartFeedback={restartFeedback} feedbackTypes={feedbackTypes} feedbackType={feedbackType} />}      
+                    </>
+                )
+            }
 
             <WidgetFooter></WidgetFooter>
         </div>

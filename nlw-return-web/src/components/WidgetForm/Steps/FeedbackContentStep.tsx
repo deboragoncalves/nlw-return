@@ -1,3 +1,5 @@
+import { FormEvent, useState } from "react";
+
 import { FeedbackType } from "..";
 import { CloseButton } from "../../CloseButton";
 import { WidgetHeader } from "../../WidgetHeader";
@@ -9,12 +11,14 @@ import { ScreenshotButton } from "../ScreenshotButton";
     - ring: borda ao redor
     - ring-1: largura da borda
     - tailwindcss/forms: cria estilos padrões para os forms
+    - mostrar preview do print: criar estado screenshot, sendo string ou null
 */
 
 interface FeedbackContentStepProps {
     feedbackTypes: any;
     feedbackType: FeedbackType;
     restartFeedback: () => void;
+    setFeedbackSent: (feedbackSent: boolean) => void;
 }
 
 export function FeedbackContentStep(prop: FeedbackContentStepProps) {
@@ -25,6 +29,20 @@ export function FeedbackContentStep(prop: FeedbackContentStepProps) {
     let feedbackImageAlt = feedbackTypesObject[feedback].image.alt;
 
     let messagePlaceholder = "Teve uma ideia de melhoria ou de nova funcionalidade? Conta pra gente!";
+
+    const [screenshoot, setScreenshot] = useState<string>("");
+    const [comment, setComment] = useState<string>("");
+
+    function submitFeedback(event: FormEvent) {
+        event.preventDefault();
+
+        console.log("Image base64: ");
+        console.log(screenshoot);
+        console.log("Feedback: ");
+        console.log(comment);
+
+        prop.setFeedbackSent(true);
+    }
 
     return (
         <>
@@ -37,12 +55,16 @@ export function FeedbackContentStep(prop: FeedbackContentStepProps) {
                 <CloseButton />
             </div>
 
-            <form className="my-4 w-full">
-                <textarea placeholder={messagePlaceholder} className="min-w-[304px] w-full min-h-[112px] text-sm placeholder-zinc-400 text-zinc-100 border-zinc-600 bg-transparent roudend-md focus:border-brand-500 focus:ring-brand-500 focus:ring-1 resize-none focus:outline-none scrollbar scrollbar-thumb-zinc-700 scrollbar-track-transparent scrollbar-thin"></textarea>
+            <form onSubmit={submitFeedback}className="my-4 w-full">
+                <textarea
+                    onChange={event => setComment(event.target.value)}
+                    placeholder={messagePlaceholder}
+                    className="min-w-[304px] w-full min-h-[112px] text-sm placeholder-zinc-400 text-zinc-100 border-zinc-600 bg-transparent roudend-md focus:border-brand-500 focus:ring-brand-500 focus:ring-1 resize-none focus:outline-none scrollbar scrollbar-thumb-zinc-700 scrollbar-track-transparent scrollbar-thin"></textarea>
                 <footer className="flex gap-2 mt-2">
-                    <ScreenshotButton />
+                    <ScreenshotButton screenshot={screenshoot} setScreenshot={setScreenshot} />
                     <button
-                        className="p-2 bg-brand-500 rounded-md border-transparent flex-1 flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offtet-brand-500"
+                        className="p-2 bg-brand-500 rounded-md border-transparent flex-1 flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offtet-brand-500 disabled:opacity-50 disabled:hover:bg-brand-500"
+                        disabled={comment.length == 0}
                         type="submit">
                         Enviar feedback
                     </button>

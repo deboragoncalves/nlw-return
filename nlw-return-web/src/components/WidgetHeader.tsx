@@ -7,13 +7,13 @@
 import { CloseButton } from "./CloseButton";
 
 interface HeaderProps {
-    title: string;
+    title?: string;
 }
 
 export function WidgetHeader(props: HeaderProps) {
     return (
         <div>
-            <span className="text-xl leading-6">{props.title}</span>
+            <span className="text-xl leading-6">{props.title ?? ''}</span>
             <CloseButton />
         </div>
     );
