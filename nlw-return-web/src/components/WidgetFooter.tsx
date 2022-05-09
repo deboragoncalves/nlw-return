@@ -1,16 +1,23 @@
+import tailwind from "tailwind-styled-components";
+
+/* Criar ternário caso não seja passado a propriedade text. 
+Adicionar ? na propriedade da interface FooterProps */
+
 interface FooterProps {
     text?: string;
 }
 
 let textFooterDefault = "Feito com ♥ pela Rocketseat";
 
-/* Criar ternário caso não seja passado a propriedade text. 
-Adicionar ? na propriedade da interface FooterProps */
+const Footer = tailwind.footer`
+    text-xs 
+    text-neutral-400
+`;
 
 export function WidgetFooter(props: FooterProps) {
     return (
-        <footer className="text-xs text-neutral-400">
+        <Footer className="">
             {props.text ?? textFooterDefault}
-        </footer>
+        </Footer>
     );
 }

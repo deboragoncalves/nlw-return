@@ -3,6 +3,7 @@ import { FormEvent, useState } from "react";
 import html2canvas from "html2canvas";
 import { Camera, Trash } from "phosphor-react";
 import { Loading } from "../Loading";
+import tailwind from "tailwind-styled-components";
 
 /*
     - a função html2canvas tira o print da tela de acordo com o elemento passado por parâmetro
@@ -18,6 +19,32 @@ interface ScreenshotButtonProps {
     setScreenshot: (screenshoot: string) => void;
     screenshot: string;
 }
+
+const ButtonTrash = tailwind.div`
+    p-1 
+    w-10 
+    h-10 
+    rounded-md 
+    border-transparent 
+    flex 
+    justify-end 
+    items-end 
+    text-zinc-400 
+    hover:text-zinc-100
+`;
+
+const ButtonScrenshot = tailwind.button`
+    p-2 
+    bg-zinc-800 
+    border-transparent 
+    rounded-md 
+    hover:bg-zinc-700 
+    focus:outline-none 
+    focus:ring-2 
+    focus:ring-offset-2 
+    focus:ring-offtet-brand-500
+`;
+
 
 export function ScreenshotButton(prop: ScreenshotButtonProps) {
     const [isTakingScreenshot, setIsTakingScreenshot] = useState(false);
@@ -38,23 +65,22 @@ export function ScreenshotButton(prop: ScreenshotButtonProps) {
 
     if (screenshoot) {
         return (
-            <button
+            <ButtonTrash
                 style={{
                     backgroundImage: `url(${screenshoot})`,
                     backgroundPosition: "right bottom",
                     backgroundSize: 180
-                }}
-                className="p-1 w-10 h-10 rounded-md border-transparent flex justify-end items-end text-zinc-400 hover:text-zinc-100">
+                }}>
                 <Trash
                     onClick={() => prop.setScreenshot('')}
                     weight="fill" />
-            </button>
+            </ButtonTrash>
         )
     }
 
     return (
-        <button onClick={takeScreenshot} className="p-2 bg-zinc-800 border-transparent rounded-md hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offtet-brand-500">
+        <ButtonScrenshot onClick={takeScreenshot}>
             { isTakingScreenshot ? <Loading /> : <Camera className="w-6 h-6 text-zinc" />}
-        </button>
+        </ButtonScrenshot>
     ); 
 }

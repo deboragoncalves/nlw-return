@@ -1,9 +1,19 @@
 import { CircleNotch } from "phosphor-react";
+import tailwind from "tailwind-styled-components";
+
+const ContainerLoading = tailwind.div`
+    w-6 
+    h-6 
+    flex 
+    items-center 
+    justify-center 
+    overflow-hidden
+`;
 
 export function Loading() {
     return (
-        <div className="w-6 h-6 flex items-center justify-center overflow-hidden">
+        <ContainerLoading>
             <CircleNotch className="w-4 h-4 animate-spin" weight="bold" />
-        </div>
+        </ContainerLoading>
     );
 }

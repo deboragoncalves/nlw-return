@@ -8,7 +8,8 @@ import ideaImage from "../../images/idea.svg";
 import thoughtImage from "../../images/thought.svg";
 import { FeedbackTypeStep } from "./Steps/FeedbackTypeStep";
 import { FeedbackContentStep } from "./Steps/FeedbackContentStep";
-import { FeedbackSucessStep } from "./Steps/FeedbackSucessStep";
+import { FeedbackSuccessStep } from "./Steps/FeedbackSuccessStep";
+import tailwind from "tailwind-styled-components";
 
 /*
     Tailwind:
@@ -62,6 +63,18 @@ const feedbackTypes = {
 
 export type FeedbackType = keyof typeof feedbackTypes;
 
+const ContainerWidgetForm = tailwind.div`
+    bg-zinc-900 
+    p-4 relative 
+    rounded-2xl 
+    mb-4 
+    flex-col 
+    items-center 
+    shadow-lg 
+    w-[calc(100vw-2rem)] 
+    md:w-auto
+`;
+
 export function WidgetForm() {  
 
     const [feedbackType, setFeedbackType] = useState<FeedbackType | null>(null);
@@ -73,10 +86,10 @@ export function WidgetForm() {
     }
 
     return (
-        <div className="bg-zinc-900 p-4 relative rounded-2xl mb-4 flex-col items-center shadow-lg w-[calc(100vw-2rem)] md:w-auto">
+        <ContainerWidgetForm>
             
             {feedbackSent ?
-                <FeedbackSucessStep restartFeedback={restartFeedback} /> :
+                <FeedbackSuccessStep restartFeedback={restartFeedback} /> :
                 (
                     <>
                         {!feedbackType ?
@@ -90,6 +103,6 @@ export function WidgetForm() {
             }
 
             <WidgetFooter></WidgetFooter>
-        </div>
+        </ContainerWidgetForm>
     );
 }

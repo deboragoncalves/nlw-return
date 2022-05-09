@@ -5,6 +5,7 @@ import { CloseButton } from "../../CloseButton";
 import { WidgetHeader } from "../../WidgetHeader";
 import { ArrowLeft } from "phosphor-react";
 import { ScreenshotButton } from "../ScreenshotButton";
+import tailwind from "tailwind-styled-components";
 
 /* 
     - scrollbar thin: mais fino
@@ -20,6 +21,51 @@ interface FeedbackContentStepProps {
     restartFeedback: () => void;
     setFeedbackSent: (feedbackSent: boolean) => void;
 }
+
+const ButtonBack = tailwind.button`
+    top-5 
+    left-5 
+    absolute 
+    text-zinc-400 
+    hover:text-zinc-100
+`;
+
+const ContainerHeader = tailwind.div`
+    flex 
+    items-center 
+    gap-2 
+    mx-10
+`;
+
+const FormFeedback = tailwind.form`
+    my-4 
+    w-full
+`;
+
+const FooterFormFeedback = tailwind.footer`
+    flex 
+    gap-2 
+    mt-2
+`;
+
+const ButtonSendFeedback = tailwind.button`
+    p-2 
+    bg-brand-500 
+    rounded-md 
+    border-transparent 
+    flex-1 
+    flex 
+    justify-center 
+    items-center 
+    text-sm 
+    hover:bg-brand-300 
+    focus:outline-none 
+    focus:ring-2 
+    focus:ring-offset-2 
+    focus:ring-offtet-brand-500 
+    disabled:opacity-50 
+    disabled:hover:bg-brand-500
+`;
 
 export function FeedbackContentStep(prop: FeedbackContentStepProps) {
     let feedbackTypesObject = prop.feedbackTypes;
@@ -46,30 +92,29 @@ export function FeedbackContentStep(prop: FeedbackContentStepProps) {
 
     return (
         <>
-            <button onClick={prop.restartFeedback} type="button" className="top-5 left-5 absolute text-zinc-400 hover:text-zinc-100">
+            <ButtonBack onClick={prop.restartFeedback} type="button">
                 <ArrowLeft weight="bold" className="w-4 h-4"/>
-            </button>
-            <div className="flex items-center gap-2 mx-10">
+            </ButtonBack>
+            <ContainerHeader>
                 <img src={feedbackImageSource} alt={feedbackImageAlt} />
                 <WidgetHeader title={feedbackTitle} />
                 <CloseButton />
-            </div>
+            </ContainerHeader>
 
-            <form onSubmit={submitFeedback}className="my-4 w-full">
+            <FormFeedback onSubmit={submitFeedback}>
                 <textarea
                     onChange={event => setComment(event.target.value)}
                     placeholder={messagePlaceholder}
                     className="min-w-[304px] w-full min-h-[112px] text-sm placeholder-zinc-400 text-zinc-100 border-zinc-600 bg-transparent roudend-md focus:border-brand-500 focus:ring-brand-500 focus:ring-1 resize-none focus:outline-none scrollbar scrollbar-thumb-zinc-700 scrollbar-track-transparent scrollbar-thin"></textarea>
-                <footer className="flex gap-2 mt-2">
+                <FooterFormFeedback>
                     <ScreenshotButton screenshot={screenshoot} setScreenshot={setScreenshot} />
-                    <button
-                        className="p-2 bg-brand-500 rounded-md border-transparent flex-1 flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offtet-brand-500 disabled:opacity-50 disabled:hover:bg-brand-500"
+                    <ButtonSendFeedback
                         disabled={comment.length == 0}
                         type="submit">
                         Enviar feedback
-                    </button>
-                </footer>
-            </form>
+                    </ButtonSendFeedback>
+                </FooterFormFeedback>
+            </FormFeedback>
         </>
     );
 }
